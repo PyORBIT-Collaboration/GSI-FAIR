@@ -1,0 +1,33 @@
+
+
+TITLE, "-- SIS --";
+Q_hor = 4.17;
+Q_vec = 3.62;
+
+
+CALL file = 'sis18_inj.lat';
+
+option, -echo;
+
+beam;
+
+
+
+USE, sequence=SIS18_MID;
+
+
+
+// sectormap output
+select, flag = sectormap, clear;
+//select, flag = sectormap , range = #s/#e!, class = multipole;
+select,flag = sectortable, column = name, pos, r11, r21, r31, r41, r51, r61, r12, r22, r32, r42, r52, r62, r13, r23, r33, r43, r53, r63, r14, r24, r34, r44, r54, r64, r15, r25, r35, r45, r55, r65, r16, r26, r36, r46, r56, r66;
+twiss, sectormap, sectorfile = sectormap.txt;
+
+
+// twiss output
+select,flag = twiss, clear;
+select,flag = twiss, column = name, keyword, s, L, alfx, alfy, betx, bety, dx, dpx, mux, muy, dmux, dmuy, angle, k1l, e1, e2, lrad;
+twiss, file =twiss.txt;
+
+
+stop;
